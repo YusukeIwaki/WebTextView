@@ -49,6 +49,6 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
 
     @Override
     public WebViewProvider createWebView(WebView webView, WebView.PrivateAccess privateAccess) {
-        return new WebTextViewProvider();
+        return new WebTextViewProvider(privateAccess);
     }
 }

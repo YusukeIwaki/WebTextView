@@ -26,6 +26,12 @@ import java.util.Map;
 /**
  */
 class WebTextViewProvider implements WebViewProvider {
+    private final WebView.PrivateAccess webViewPrivateAccess;
+
+    public WebTextViewProvider(WebView.PrivateAccess webViewPrivateAccess) {
+        this.webViewPrivateAccess = webViewPrivateAccess;
+    }
+
     @Override
     public void init(Map<String, Object> javaScriptInterfaces, boolean privateBrowsing) {
 
@@ -428,7 +434,7 @@ class WebTextViewProvider implements WebViewProvider {
 
     @Override
     public WebSettings getSettings() {
-        return null;
+        return new WebTextViewSettings();
     }
 
     @Override
@@ -483,7 +489,7 @@ class WebTextViewProvider implements WebViewProvider {
 
     @Override
     public ViewDelegate getViewDelegate() {
-        return new WebTextViewDelegate();
+        return new WebTextViewDelegate(webViewPrivateAccess);
     }
 
     @Override

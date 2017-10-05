@@ -8,6 +8,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.DragEvent;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -19,11 +20,29 @@ import android.view.accessibility.AccessibilityNodeInfo;
 import android.view.accessibility.AccessibilityNodeProvider;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
+import android.webkit.WebView;
 import android.webkit.WebViewProvider;
+
+import java.lang.reflect.Method;
 
 /**
  */
 class WebTextViewDelegate implements WebViewProvider.ViewDelegate {
+
+    private final /*WebView.PrivateAccess*/Object webViewPrivateAccess;
+
+    private Class cWebViewPrivateAccess;
+
+    public WebTextViewDelegate(WebView.PrivateAccess webViewPrivateAccess) {
+        this.webViewPrivateAccess = webViewPrivateAccess;
+
+        for (Class clazz : WebView.class.getClasses()) {
+            if ("PrivateAccess".equals(clazz.getSimpleName())) {
+                cWebViewPrivateAccess = clazz;
+            }
+        }
+    }
+
     @Override
     public boolean shouldDelayChildPressedState() {
         return false;
@@ -86,7 +105,12 @@ class WebTextViewDelegate implements WebViewProvider.ViewDelegate {
 
     @Override
     public void setLayoutParams(ViewGroup.LayoutParams layoutParams) {
-
+        try {
+            Method super_setLayoutParams = cWebViewPrivateAccess.getDeclaredMethod("super_setLayoutParams", ViewGroup.LayoutParams.class);
+            super_setLayoutParams.invoke(webViewPrivateAccess, layoutParams);
+        } catch (Exception e) {
+            Log.e("WebTextView", e.getMessage(), e);
+        }
     }
 
     @Override
