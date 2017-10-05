@@ -14,5 +14,13 @@ model {
   }
 }
 
+repositories {
+    jcenter()
+    maven {
+        url "https://maven.google.com"
+    }
+}
+
 dependencies {
+  provided 'com.android.support:support-annotations:26.1.0'
 }
