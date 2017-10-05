@@ -1,0 +1,18 @@
+apply plugin: 'com.android.model.library'
+
+model {
+  android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.1"
+    ndk {
+      moduleName "webtextview"
+    }
+    defaultConfig {
+      minSdkVersion.apiLevel 24
+      targetSdkVersion.apiLevel 26
+    }
+  }
+}
+
+dependencies {
+}
