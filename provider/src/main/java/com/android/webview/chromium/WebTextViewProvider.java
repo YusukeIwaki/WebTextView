@@ -494,7 +494,7 @@ class WebTextViewProvider implements WebViewProvider {
 
     @Override
     public ScrollDelegate getScrollDelegate() {
-        return null;
+        return new WebTextViewScrollDelegate();
     }
 
     @Override
